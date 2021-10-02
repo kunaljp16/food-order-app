@@ -1,10 +1,10 @@
 import React from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import classes from "./HeaderCartBtn.module.css";
+import classes from "./HeaderCartButton.module.css";
 
-const HeaderCartBtn = (props) => {
+const HeaderCartButton = (props) => {
   return (
-    <button type="button" className="btn btn-primary">
+    <button type="button" className="btn btn-primary" onClick={props.onClick}>
       <FaShoppingCart /> Cart
       <span
         className={
@@ -17,4 +17,4 @@ const HeaderCartBtn = (props) => {
   );
 };
 
-export default HeaderCartBtn;
+export default HeaderCartButton;

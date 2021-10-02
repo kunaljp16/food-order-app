@@ -1,6 +1,6 @@
 import React from "react";
 import { Fragment } from "react";
-import HeaderCartBtn from "./HeaderCartBtn";
+import HeaderCartButton from "./HeaderCartButton";
 
 const Header = (props) => {
   return (
@@ -9,7 +9,7 @@ const Header = (props) => {
         <nav className="navbar navbar-expand-lg bg-light">
           <div className="container-fluid">
             React Food App
-            <HeaderCartBtn />
+            <HeaderCartButton onClick={props.onShowCartFn}/>
           </div>
         </nav>
       </header>
