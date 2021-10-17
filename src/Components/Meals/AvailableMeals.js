@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import DUMMY_MEALS from "./DummyData";
 import MealItem from "./MealItem/MealItem";
+import classes from './AvailableMeals.module.css';
 
 const AvailableMeals = (props) => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -22,9 +23,18 @@ const AvailableMeals = (props) => {
         });
       }
       setMeals(loadMeals);
+      setIsLoading(false);
     };
     fetchMeals();
   }, []);
+
+  if (isLoading) {
+    return (
+      <section className={classes['loading-indicator']}>
+        <p>Loading...</p>
+      </section>
+    );
+  }
 
   const mealsList = meals.map((meal) => {
     return (
