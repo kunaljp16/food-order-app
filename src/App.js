@@ -2,7 +2,7 @@ import Header from "./Components/Layout/Header";
 import Meals from "./Components/Meals/Meals";
 import Cart from "./Components/Cart/Cart";
 import { useState } from "react";
-
+import CartProvider from "./Store/CartProvider";
 function App() {
   const [isCartShown, setCartIsShown] = useState(false);
 
@@ -15,13 +15,15 @@ function App() {
   };
 
   return (
-    <div className="container-fluid px-0">
-      {isCartShown && <Cart onHideCartFn={hideCartModal}/>}
-      <Header onShowCartFn={showCartModal}  />
-      <main>
-        <Meals />
-      </main>
-    </div>
+    <CartProvider>
+      <div className="container-fluid">
+        {isCartShown && <Cart onHideCartFn={hideCartModal} />}
+        <Header onShowCartFn={showCartModal} />
+        <main>
+          <Meals />
+        </main>
+      </div>
+    </CartProvider>
   );
 }
 
