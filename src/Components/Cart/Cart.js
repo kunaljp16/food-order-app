@@ -1,10 +1,12 @@
 import ModalPopUp from "../UI/ModalPopUp";
 import CartContext from "../../Store/store-context";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import CartItem from "./CartItem";
 import classes from "./Cart.module.css";
+import Checkout from "./Checkout";
 
 const Cart = (props) => {
+  const [isCheckout, setIsCheckout] = useState(false);
   const cartCtx = useContext(CartContext);
   const hasItems = cartCtx.items.length > 0;
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
@@ -14,6 +16,10 @@ const Cart = (props) => {
   };
   const cartItemAddHandler = (item) => {
     cartCtx.addItem({ ...item, amount: 1 });
+  };
+
+  const orderHandler = () => {
+    setIsCheckout(true);
   };
 
   const cartItem = (
@@ -33,6 +39,19 @@ const Cart = (props) => {
     </ul>
   );
 
+  const actionButtons = (
+    <section className="text-end border border-end-0 border-bottom-0 border-start-0 border-3 pt-3">
+      <button className="btn btn-primary" onClick={props.onHideCartFn}>
+        Close
+      </button>
+      {hasItems && (
+        <button className="btn btn-success mx-3" onClick={orderHandler}>
+          Order
+        </button>
+      )}
+    </section>
+  );
+
   return (
     <ModalPopUp onCloseBackdrop={props.onHideCartFn}>
       {cartItem}
@@ -40,12 +59,8 @@ const Cart = (props) => {
         <span className="h4">Total Amount </span>
         <span className="h4">{totalAmount}</span>
       </section>
-      <section className="text-end border border-end-0 border-bottom-0 border-start-0 border-3 pt-3">
-        <button className="btn btn-primary" onClick={props.onHideCartFn}>
-          Close
-        </button>
-        {hasItems && <button className="btn btn-success mx-3">Order</button>}
-      </section>
+      {isCheckout && <Checkout onCancel={props.onHideCartFn} />}
+      {!isCheckout && actionButtons}
     </ModalPopUp>
   );
 };
